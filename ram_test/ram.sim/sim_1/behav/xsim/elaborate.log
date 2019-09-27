@@ -1,0 +1,23 @@
+Vivado Simulator 2018.2
+Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2018.2/bin/unwrapped/win64.o/xelab.exe -wto b4e0f3cd236a4f7bbc327cf3eeabf661 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot ram_test4_behav xil_defaultlib.ram_test4 xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module unisims_ver.GND
+Compiling module unisims_ver.RB18_INTERNAL_VLOG(DOA_REG=1,DOB...
+Compiling module unisims_ver.RAMB18E1(DOA_REG=1,DOB_REG=1,REA...
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_prim_w...
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_prim_w...
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_generi...
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_top
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_v8_4_1...
+Compiling module xil_defaultlib.blk_mem_gen_2_blk_mem_gen_v8_4_1
+Compiling module xil_defaultlib.blk_mem_gen_2
+Compiling module xil_defaultlib.ram4
+Compiling module xil_defaultlib.ram_test4
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot ram_test4_behav

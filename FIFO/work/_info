@@ -1,0 +1,70 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Code_programmed/Vivado/Vivado_file/FIFO
+vbase_wrapper
+!s110 1567215285
+!i10b 1
+!s100 o7zIM3=K=@_QokcoDD98;1
+I7RP1:HLk^22M@WYkh_BVf0
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1567215285
+8c:\users\wei\appdata\local\temp\tmps2cqa2.v
+Fc:\users\wei\appdata\local\temp\tmps2cqa2.v
+L0 12
+Z2 OL;L;10.4;61
+r1
+!s85 0
+31
+!s108 1567215285.918000
+!s107 c:\users\wei\appdata\local\temp\tmps2cqa2.v|
+!s90 c:\users\wei\appdata\local\temp\tmps2cqa2.v|
+!i113 0
+Z3 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vfifo_test
+!s110 1567215262
+!i10b 1
+!s100 :lS0[``0VlN:[G[KB_Kb43
+I]]hoHa2gS`<WbQO@W_jWW1
+R1
+R0
+w1567215261
+8c:\users\wei\appdata\local\temp\tmp9c4g7l.v
+Fc:\users\wei\appdata\local\temp\tmp9c4g7l.v
+L0 23
+R2
+r1
+!s85 0
+31
+!s108 1567215262.114000
+!s107 c:\users\wei\appdata\local\temp\tmp9c4g7l.v|
+!s90 c:\users\wei\appdata\local\temp\tmp9c4g7l.v|
+!i113 0
+R3
+vfifo_test1
+!s110 1567407010
+!i10b 1
+!s100 Z7>VbaPMIoi?jWaP:nNf@0
+I=<F=A5J73Z4cG066F^0]z1
+R1
+R0
+w1567407009
+8c:\users\wei\appdata\local\temp\tmph6d72l.v
+Fc:\users\wei\appdata\local\temp\tmph6d72l.v
+L0 21
+R2
+r1
+!s85 0
+31
+!s108 1567407010.102000
+!s107 c:\users\wei\appdata\local\temp\tmph6d72l.v|
+!s90 c:\users\wei\appdata\local\temp\tmph6d72l.v|
+!i113 0
+R3

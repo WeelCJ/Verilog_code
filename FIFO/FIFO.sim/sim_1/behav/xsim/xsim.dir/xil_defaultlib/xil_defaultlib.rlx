@@ -1,0 +1,8 @@
+0.6
+2018.2
+Jun 14 2018
+20:41:02
+D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.sim/sim_1/behav/xsim/glbl.v,1529022455,verilog,,,,glbl,,,,,,,,
+D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.srcs/sim_1/new/fifo_test1.v,1567137875,verilog,,,,fifo_test1,,,,,,,,
+D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.srcs/sources_1/ip/fifo_generator_0/sim/fifo_generator_0.v,1566972606,verilog,,D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.srcs/sources_1/new/fifo_test.v,,fifo_generator_0,,,,,,,,
+D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.srcs/sources_1/new/fifo_test.v,1567078154,verilog,,D:/Code_programmed/Vivado/Vivado_file/FIFO/FIFO.srcs/sim_1/new/fifo_test1.v,,fifo_test,,,,,,,,
