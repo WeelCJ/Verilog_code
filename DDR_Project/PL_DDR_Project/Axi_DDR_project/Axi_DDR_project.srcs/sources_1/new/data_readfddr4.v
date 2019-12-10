@@ -188,7 +188,7 @@ always @( posedge m_axi_mm2s_aclk or negedge m_axi_mm2s_aresetn )begin
   end
 end
 
-always @(posedge m_axis_aclk or negedge m_axi_mm2s_aresetn) begin : proc_
+always @(posedge m_axis_aclk or negedge m_axi_mm2s_aresetn) begin
     if(~m_axi_mm2s_aresetn) begin
         read_done <= 0;
     end else begin
