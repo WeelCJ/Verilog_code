@@ -1,0 +1,7 @@
+verilog xil_defaultlib --include "../../../../PS_DDR_Project.srcs/sources_1/bd/zcu102/ipshared/ec67/hdl" --include "../../../../PS_DDR_Project.srcs/sources_1/bd/zcu102/ipshared/5bb9/hdl/verilog" --include "../../../../PS_DDR_Project.srcs/sources_1/bd/zcu102/ipshared/e4d1/hdl" \
+"../../../bd/zcu102/sim/zcu102.v" \
+"../../../bd/zcu102/ip/zcu102_zynq_ultra_ps_e_0_1/sim/zcu102_zynq_ultra_ps_e_0_1_vip_wrapper.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

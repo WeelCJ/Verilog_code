@@ -1,0 +1,24 @@
+15:54:34 **** Auto Build of configuration Debug for project ZCU_PS_DDR_example ****
+make all 
+Building file: ../src/helloworld.c
+Invoking: ARM v8 gcc compiler
+aarch64-none-elf-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -I../../ZCU_PS_DDR_example_bsp/psu_cortexa53_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c:51:28: warning: extra tokens at end of #include directive
+ #include "xparameters_ps.h"<br>#include "xil_printf.h"
+                            ^~~~
+Finished building: ../src/helloworld.c
+ 
+Building target: ZCU_PS_DDR_example.elf
+Invoking: ARM v8 gcc linker
+aarch64-none-elf-gcc -Wl,-T -Wl,../src/lscript.ld -L../../ZCU_PS_DDR_example_bsp/psu_cortexa53_0/lib -o "ZCU_PS_DDR_example.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: ZCU_PS_DDR_example.elf
+ 
+Invoking: ARM v8 Print Size
+aarch64-none-elf-size ZCU_PS_DDR_example.elf  |tee "ZCU_PS_DDR_example.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  33348	   2352	  20648	  56348	   dc1c	ZCU_PS_DDR_example.elf
+Finished building: ZCU_PS_DDR_example.elf.size
+ 
+
+15:54:34 Build Finished (took 799ms)
+

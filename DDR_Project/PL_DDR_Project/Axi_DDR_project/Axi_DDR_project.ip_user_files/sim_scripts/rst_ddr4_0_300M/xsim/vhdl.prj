@@ -1,0 +1,4 @@
+vhdl xil_defaultlib  \
+"../../../../Axi_DDR_project.srcs/sources_1/ip/rst_ddr4_0_300M/sim/rst_ddr4_0_300M.vhd" \
+
+nosort
