@@ -1,7 +1,7 @@
-Running: xsim.dir/ddr4_example_test_behav/xsimk.exe -simmode gui -wdb ddr4_example_test_behav.wdb -simrunnum 0 -socket 52440
+Running: xsim.dir/ddr4_example_test_behav/xsimk.exe -simmode gui -wdb ddr4_example_test_behav.wdb -simrunnum 0 -socket 49345
 Design successfully loaded
-Design Loading Memory Usage: 19588 KB (Peak: 19588 KB)
+Design Loading Memory Usage: 19696 KB (Peak: 19696 KB)
 Design Loading CPU Usage: 46 ms
 Simulation completed
-Simulation Memory Usage: 29476 KB (Peak: 29476 KB)
-Simulation CPU Usage: 108 ms
+Simulation Memory Usage: 315968 KB (Peak: 315968 KB)
+Simulation CPU Usage: 51515 ms

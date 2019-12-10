@@ -60,6 +60,8 @@ module ddr_example #(
     input s_axis_tvalid,
     input s_axis_tlast,
     input [1023 : 0] s_axis_tdata,
+    input [9 : 0] write_burst_len, read_burst_len,
+    output write_done, read_done,
 
 //    output                  c0_init_calib_complete,
     output                  c0_ddr4_act_n,
@@ -119,7 +121,6 @@ module ddr_example #(
     wire [3 : 0] c0_ddr4_s_axi_rid;              // output wire [3 : 0] c0_ddr4_s_axi_rid
     wire [127 : 0] c0_ddr4_s_axi_rdata;        // output wire [127 : 0] c0_ddr4_s_axi_rdata   
 
-    // wire read_idle, read_done;
     wire s_axis_tready;
 
     wire m_axis_tvalid;
@@ -232,8 +233,8 @@ data_write2ddr4 uut2(
     .m_axi_s2mm_bready(c0_ddr4_s_axi_bready),
     .wr_addr_en(wr_addr_en),
     .start_wr_addr(start_wr_addr), 
-//    .write_idle(write_idle),
-//    .write_done(write_done),
+    .write_burst_len(write_burst_len),
+    .write_done(write_done),
     .s_axis_aclk(clk_100M),
     .s_axis_tdata(s_axis_tdata),
     .s_axis_tvalid(s_axis_tvalid),
@@ -260,8 +261,8 @@ data_readfddr4 uut3(
     .m_axi_mm2s_rready(c0_ddr4_s_axi_rready),
     .rd_addr_en(rd_addr_en),
     .start_rd_addr(start_rd_addr),
-    // .read_idle(read_idle),
-    // .read_done(read_done),
+    .read_burst_len(read_burst_len),
+    .read_done(read_done),
     .m_axis_aclk(clk_100M),
     .m_axis_tdata(m_axis_tdata),
     .m_axis_tvalid(m_axis_tvalid),

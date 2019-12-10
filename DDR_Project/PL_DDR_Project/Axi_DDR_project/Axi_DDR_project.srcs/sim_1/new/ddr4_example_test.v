@@ -28,6 +28,9 @@ module ddr4_example_test;
     reg s_axis_tvalid;
     reg s_axis_tlast;
     reg [1023 : 0] s_axis_tdata;
+    reg [9 : 0] write_burst_len, read_burst_len;
+
+    wire write_done, read_done;
 
     wire                 c0_ddr4_act_n;
     wire  [16:0]          c0_ddr4_adr;
@@ -67,6 +70,7 @@ integer i;
         sys_rst = 1'b0;
         #5599595;
         start_wr_addr = 29'd128;
+        write_burst_len = 10'd480;
         wr_addr_en = 1;
         s_axis_tvalid = 1;
         s_axis_tdata = {{8{16'hf11f}},{8{16'he11e}},{8{16'hd11d}},{8{16'hc11c}},{8{16'hb11b}},{8{16'ha11a}},{8{16'h9119}},{8{16'h8118}}};
@@ -76,27 +80,28 @@ integer i;
         s_axis_tvalid = 0;
         s_axis_tlast = 0;
     
-        for(i = 0; i < 60; i = i + 1) begin                 
+        for(i = 0; i < 59; i = i + 1) begin                 
             #160000;
             s_axis_tvalid = 1;
-            s_axis_tdata = s_axis_tdata + 1024'd3245;
+            s_axis_tdata = s_axis_tdata + 1;
             s_axis_tlast = 1;
             #10000;
             s_axis_tvalid = 0;
             s_axis_tlast = 0;
         end
 
-        #100000;
+        #200000;
         rd_addr_en = 1;
         start_rd_addr = 29'd128;   
+        read_burst_len = 10'd480;
         #10000;
         rd_addr_en = 0;
 
-        for(i = 0; i < 60; i = i + 1) begin 
-            #160000;
-            #10000;
-        end 
-        $stop;   
+        // for(i = 0; i < 59; i = i + 1) begin 
+        //     #160000;
+        //     #10000;
+        // end 
+        // $stop;   
     end
 //**************************************************************************//
 // Clock Generation
@@ -116,8 +121,10 @@ ddr_example uut1(
     .sys_rst           (sys_rst),
     .start_wr_addr     (start_wr_addr),
     .start_rd_addr     (start_wr_addr),
-    // .read_idle         (read_idle),
-    // .read_done         (read_done),
+    .write_done        (write_done),
+    .write_burst_len   (write_burst_len),
+    .read_done         (read_done),
+    .read_burst_len    (read_burst_len),
     .wr_addr_en        (wr_addr_en),
     .rd_addr_en        (rd_addr_en),
     .clk_50M           (clk_50M),

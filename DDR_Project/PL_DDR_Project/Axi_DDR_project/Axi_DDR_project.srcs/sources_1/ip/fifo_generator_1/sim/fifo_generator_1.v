@@ -63,6 +63,7 @@ module fifo_generator_1 (
   dout,
   full,
   empty,
+  almost_empty,
   prog_full
 );
 
@@ -85,6 +86,8 @@ output wire [15 : 0] dout;
 output wire full;
 (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_read:1.0 FIFO_READ EMPTY" *)
 output wire empty;
+(* X_INTERFACE_INFO = "xilinx.com:interface:fifo_read:1.0 FIFO_READ ALMOST_EMPTY" *)
+output wire almost_empty;
 output wire prog_full;
 
   fifo_generator_v13_2_2 #(
@@ -99,7 +102,7 @@ output wire prog_full;
     .C_ENABLE_RLOCS(0),
     .C_FAMILY("zynquplus"),
     .C_FULL_FLAGS_RST_VAL(0),
-    .C_HAS_ALMOST_EMPTY(0),
+    .C_HAS_ALMOST_EMPTY(1),
     .C_HAS_ALMOST_FULL(0),
     .C_HAS_BACKUP(0),
     .C_HAS_DATA_COUNT(0),
@@ -319,7 +322,7 @@ output wire prog_full;
     .wr_ack(),
     .overflow(),
     .empty(empty),
-    .almost_empty(),
+    .almost_empty(almost_empty),
     .valid(),
     .underflow(),
     .data_count(),

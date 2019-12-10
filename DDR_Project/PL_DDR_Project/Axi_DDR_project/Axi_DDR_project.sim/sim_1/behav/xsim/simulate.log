@@ -16,3 +16,22 @@ Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
 ddr4_example_test.uut2.mem_model_x16.mem.memModels_Ri2[0].memModel2[0].ddr4_model:Configured as x16 4G stack:1
 Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0011111. Instance: ddr4_example_test.uut1.uut1.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[0].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
 Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0011111. Instance: ddr4_example_test.uut1.uut1.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[1].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+ddr4_example_test.uut2.mem_model_x16.mem.memModels_Ri2[0].memModel2[0].ddr4_model.always_diff_ck.if_diff_ck:VIOLATION: cmdPPDE BG:0 B:0 A:0 (BL:8 WL:12 RL:1171) @1450623 Required:
+	tCMD_GEAR - 2598 clocks.
+ddr4_example_test.uut2.mem_model_x16.mem.memModels_Ri2[0].memModel2[0].ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @2925623
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:1 dm:0 @4912706
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:1 dm:1 @4912706
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:2 dm:0 @4913122
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:2 dm:1 @4913122
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:3 dm:0 @4913541
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:3 dm:1 @4913541
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:0 dm:0 @4913957
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:0 dm:1 @4913957
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:5 dm:0 @4914374
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:5 dm:1 @4914374
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:6 dm:0 @4914790
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:6 dm:1 @4914790
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:7 dm:0 @4915207
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:7 dm:1 @4915207
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:4 dm:0 @4915623
+Model:WARNING: Reading unwritten address: C:0 BG:0 B:0 R:0 C:4 dm:1 @4915623

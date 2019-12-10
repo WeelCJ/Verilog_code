@@ -55,16 +55,17 @@
 
 //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
 fifo_generator_1 your_instance_name (
-  .rst(rst),              // input wire rst
-  .wr_clk(wr_clk),        // input wire wr_clk
-  .rd_clk(rd_clk),        // input wire rd_clk
-  .din(din),              // input wire [127 : 0] din
-  .wr_en(wr_en),          // input wire wr_en
-  .rd_en(rd_en),          // input wire rd_en
-  .dout(dout),            // output wire [15 : 0] dout
-  .full(full),            // output wire full
-  .empty(empty),          // output wire empty
-  .prog_full(prog_full)  // output wire prog_full
+  .rst(rst),                    // input wire rst
+  .wr_clk(wr_clk),              // input wire wr_clk
+  .rd_clk(rd_clk),              // input wire rd_clk
+  .din(din),                    // input wire [127 : 0] din
+  .wr_en(wr_en),                // input wire wr_en
+  .rd_en(rd_en),                // input wire rd_en
+  .dout(dout),                  // output wire [15 : 0] dout
+  .full(full),                  // output wire full
+  .empty(empty),                // output wire empty
+  .almost_empty(almost_empty),  // output wire almost_empty
+  .prog_full(prog_full)        // output wire prog_full
 );
 // INST_TAG_END ------ End INSTANTIATION Template ---------
 

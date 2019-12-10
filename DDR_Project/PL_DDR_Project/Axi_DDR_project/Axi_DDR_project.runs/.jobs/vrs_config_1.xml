@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="fifo_generator_0_synth_1" LaunchDir="D:/Code_Programmed/Vivado_file/FPGA_CNN/DDR_Project/PL_DDR_Project/Axi_DDR_project/Axi_DDR_project.runs/fifo_generator_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+</Runs>
+

@@ -57,16 +57,16 @@ module data_write2ddr4 #(
     input [28:0] start_wr_addr,                   //开始写数据的地址
     input wr_addr_en,                             //开始使能信号
     
-//    output reg write_idle,             //空闲
-//    output reg write_done,             //完成信号
+    output reg write_done,             //写完成信号
     
     input s_axis_aclk,              //用户模块的输入时钟
     
-    //与cal_ip模块相连
-    input [1023:0] s_axis_tdata,
+    input [1023:0] s_axis_tdata,    //axi_stream协议
     input s_axis_tvalid,
     input s_axis_tlast,
-    output s_axis_tready
+    output s_axis_tready,
+
+    input [9 : 0] write_burst_len   //写多少数据
     
  );
     
@@ -83,14 +83,16 @@ localparam  maxikw = clogb2(maxisw-1);
 
 
 /* Parameter definitions of STATE variables*/
-localparam [4:0]  S0 = 5'd0, //S0=0
-                  S1 = 5'd1, //S1=1
-                  S2 = 5'd2, //S2=2
-                  S3 = 5'd3, //S3=3
-                  S4 = 5'd4, //S4=3
-                  S5 = 5'd5; //S5=3
+localparam [2:0]  S0 = 3'd0, //S0=0
+                  S1 = 3'd1, //S1=1
+                  S2 = 3'd2, //S2=2
+                  S3 = 3'd3, //S3=3
+                  S4 = 3'd4, //S4=4
+                  S5 = 3'd5, //S5=5
+                  S6 = 3'd6, //S6=6
+                  S7 = 3'd7; //S7=7
 
-reg [4:0] state_in, state_out;               //数据输入异步FIFO的state_in和从异步FIFO输入DDR的state_out
+reg [2:0] state_in, state_out;               //数据输入异步FIFO的state_in和从异步FIFO输入DDR的state_out
 
 
 reg axi_s2mm_wvalid;                         //寄存写数据信号
@@ -107,7 +109,7 @@ reg fifo_write;
 
 reg [3:0] sendlen;                     //一次发送8个数据进DDR
 
-assign s_axis_tready = s_axis_tvalid && (sendlen == 1);     //写完后初始化成功后开始传输
+assign s_axis_tready = s_axis_tvalid;     //写完后初始化成功后开始传输
 
 assign {data_reg[3], data_reg[2], data_reg[1], data_reg[0]} = axis_tdata;
 assign write_addr_ad = (wr_addr_en) ? 0 : 29'd128;          //地址的累加(也可以直接用数加)
@@ -119,6 +121,7 @@ wire [127 : 0] fifo_out;
 assign m_axi_s2mm_wvalid = (axi_s2mm_wvalid & ~fifo_empty) ;//写有效且FIFO为空或者继续写有效
 assign m_axi_s2mm_wlast = (axi_s2mm_wlast & ~fifo_empty);
 
+reg [9 : 0] write_cnt;            //写数据计数
 
 reg [3:0] fifo_count;             //传输四个256位的数据
 
@@ -127,23 +130,15 @@ always @(posedge s_axis_aclk or negedge m_axi_s2mm_aresetn) begin
         fifo_count <= 0;                //等待计时    
         fifo_write <= 0;
         axis_tdata <= 0;
-        start_wr_addr_reg <= 0;
         state_in <= S0;
     end else begin
         case (state_in)
             S0: begin
-                if (s_axis_tvalid && s_axis_tready && wr_addr_en) begin
+                if (s_axis_tvalid && s_axis_tready) begin
                     axis_tdata <= s_axis_tdata;
-                    start_wr_addr_reg <= start_wr_addr;
                     state_in <= S1;
-                end else begin 
-                    if (s_axis_tvalid && s_axis_tready && (sendlen == 1)) begin   //表示已经写完一次
-                        axis_tdata <= s_axis_tdata;
-                        start_wr_addr_reg <= start_wr_addr_reg + write_addr_ad;
-                        state_in <= S1;
-                    end else begin
-                        state_in <= state_in;
-                    end
+                end else begin
+                    state_in <= state_in;
                 end
             end
             S1: begin
@@ -168,14 +163,15 @@ end
 always @( posedge m_axi_s2mm_aclk or negedge m_axi_s2mm_aresetn ) begin
     if(~m_axi_s2mm_aresetn) begin    //同步复位
         state_out <= S3;
-//        write_idle <= 1;
-//        write_done <= 0;
         sendlen <= 0;                //突发传输的发送次数
         axi_s2mm_wlast <=  0;          //最后一次突发传输  
         axi_s2mm_wvalid <=  0;            //写无效    
         m_axi_s2mm_awvalid <= 0;      //表明此通道的地址控制信号有效 
         m_axi_s2mm_awaddr <= 0; 
-        m_axi_s2mm_awid <= 0;        
+        m_axi_s2mm_awid <= 0; 
+        write_cnt <= 0;       
+        write_done <= 0;
+        start_wr_addr_reg <= 0;
       end else begin
         m_axi_s2mm_awprot <= 0;            //默认
         m_axi_s2mm_awcache <= 4'd0;        //正常非缓存的Buffer存储
@@ -185,30 +181,39 @@ always @( posedge m_axi_s2mm_aclk or negedge m_axi_s2mm_aresetn ) begin
         m_axi_s2mm_awburst <= 2'b01;      //AXI3所有突发长度为1-16；AXI4 INCR为1-256，其他为1-16
         m_axi_s2mm_wstrb <= {maxisw{1'b1}};   //用来表明哪8bit是有效的
         m_axi_s2mm_bready <= 1;           //表示主机能够接收写响应
-//        write_done <= 0;
 
         case (state_out)
             S3: begin
+                if(wr_addr_en) begin
+                    start_wr_addr_reg <= start_wr_addr; 
+                    write_cnt <= 0;
+                    state_out <= S4;                   
+                end else begin
+                    state_out <= state_out;
+                end
+            end
+            S4: begin
                 sendlen <= 1;
                 if (~fifo_empty) begin                           
                     if (m_axi_s2mm_awvalid && m_axi_s2mm_awready) begin
-                        state_out <= S4;
+                        state_out <= S5;
                         m_axi_s2mm_awvalid <= 0;
                         m_axi_s2mm_awid <= m_axi_s2mm_awid + 1;
                     end else begin
                         m_axi_s2mm_awvalid <= 1;
                         m_axi_s2mm_awaddr <= start_wr_addr_reg;
+                        start_wr_addr_reg <= start_wr_addr_reg + write_addr_ad;
                     end
                 end else begin
                     m_axi_s2mm_awvalid <= 0;
                 end
             end
-            S4: begin
+            S5: begin
                 if (m_axi_s2mm_wvalid && m_axi_s2mm_wready && m_axi_s2mm_wlast) begin
-                    state_out <= S5;
+                    state_out <= S6;
                     axi_s2mm_wlast <= 0;
                     axi_s2mm_wvalid <= 0;
-//                    ap_done <= 1;
+                    write_cnt <= write_cnt + 8; 
                 end else begin
                     if (m_axi_s2mm_wvalid && m_axi_s2mm_wready) begin
                         if (sendlen >= 7) begin
@@ -221,24 +226,40 @@ always @( posedge m_axi_s2mm_aclk or negedge m_axi_s2mm_aresetn ) begin
                     end
                 end
             end
-            S5: begin
-                state_out <= S3;                   //延迟（可以去除）
+            S6: begin
+                state_out <= (write_cnt == write_burst_len) ? S7 : S4;
+            end
+            S7: begin
+                write_cnt <= 0;
+                state_out <= S3;
             end
             default : state_out <= S3;
         endcase
     end
 end   
 
+always @(posedge s_axis_aclk or negedge m_axi_s2mm_aresetn) begin        //产生脉冲写信号
+    if(~m_axi_s2mm_aresetn) begin
+        write_done <= 0;
+    end else begin
+        if (write_cnt == write_burst_len) begin
+            write_done <= 1;             
+        end else begin
+            write_done <= 0;
+        end
+    end
+end
+
 fifo_generator_0 uut1 (
-  .rst(~m_axi_s2mm_aresetn),        // input wire rst
-  .wr_clk(s_axis_aclk),         // input wire wr_clk
-  .rd_clk(m_axi_s2mm_aclk),  // input wire rd_clk
-  .din(fifo_in),        // input wire [255 : 0] din
-  .wr_en(fifo_write),    // input wire wr_en
+  .rst(~m_axi_s2mm_aresetn),                                    // input wire rst
+  .wr_clk(s_axis_aclk),                                         // input wire wr_clk
+  .rd_clk(m_axi_s2mm_aclk),                                     // input wire rd_clk
+  .din(fifo_in),                                                // input wire [255 : 0] din
+  .wr_en(fifo_write),                                           // input wire wr_en
   .rd_en(m_axi_s2mm_wready & axi_s2mm_wvalid & ~fifo_empty),    // input wire rd_en
-  .dout(fifo_out),      // output wire [127 : 0] dout
-  .full(fifo_full),      // output wire full
-  .empty(fifo_empty)    // output wire empty
+  .dout(fifo_out),                                              // output wire [127 : 0] dout
+  .full(fifo_full),                                             // output wire full
+  .empty(fifo_empty)                                            // output wire empty
 );
 
 assign m_axi_s2mm_wdata = axi_s2mm_wvalid ? fifo_out : 0;
